@@ -66,12 +66,12 @@ TAG=$(shell echo $$CIRCLE_SHA1 | cut -c 1-7)
 
 .DEFAULT_GOAL:= build
 
-.PHONY: pull export import environment test test-elasticsearch test-elastic-search_parallel teardown
+.PHONY: pull export import environment test-python-science teardown
 
 # Define linked containers (these name should match keys in
 # fig.ml). The test & test-ci targets wil be run with all links set
 # correctly.
-DOCKER_RUN_KAGGLE:=docker run --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -p 8888:8888 -it $(REPO_NAME)/effective-python bash
+DOCKER_RUN_KAGGLE:=docker run --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -p 8888:8888 -it $(REPO_NAME)/python-science bash
 
 # Wildcard rule to build an image from a file inside dockerfiles/
 # Use the tasks like any other dependency. Order may be controller
@@ -94,7 +94,7 @@ test:
 # NOTE: Cannot use --rm on Circle CI, hence the seemingly
 # duplicate task.
 
-test-effective-python: images/effective-python
+test-python-science : images/python-science
 	$(DOCKER_RUN_KAGGLE)
 
 teardown:
